@@ -13,6 +13,10 @@ import fun.madeby.snake.util.ViewportUtils;
 import fun.madeby.snake.util.debug.DebugCameraController;
 
 // super dispose in game disposes game screen and this dispose
+
+/**
+ * A class for everything related to rendering in the game so all textures etc
+ */
 public class GameRenderer implements Disposable {
     private final GameController controller;
 
@@ -51,6 +55,10 @@ public class GameRenderer implements Disposable {
         renderer.end();
 
         renderDebug();
+    }
+
+    private void renderDebug() {
+        ViewportUtils.drawGrid(viewport, renderer);
     }
 
     // called at start of game and for any subsequent resize event.
