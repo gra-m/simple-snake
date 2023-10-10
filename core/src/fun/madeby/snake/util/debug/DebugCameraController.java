@@ -1,4 +1,4 @@
-package fun.madeby.util.debug;
+package fun.madeby.snake.util.debug;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -21,7 +21,7 @@ public class DebugCameraController {
     private Vector2 position = new Vector2();
     private Vector2 startPosition = new Vector2();
     private float zoom = 1.0f;
-    private DebugCameraInfo info;
+    private fun.madeby.util.debug.DebugCameraInfo info;
 
     // == constructors ==
     public DebugCameraController() {
@@ -30,7 +30,7 @@ public class DebugCameraController {
 
     // == init ==
     private void init() {
-        info = new DebugCameraInfo();
+        info = new fun.madeby.util.debug.DebugCameraInfo();
 
         log.info("cameraInfo= " + info);
     }
