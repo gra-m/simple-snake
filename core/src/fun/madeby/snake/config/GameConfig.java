@@ -13,6 +13,6 @@ public class GameConfig {
 
     //Snake
     public static final float SNAKE_SIZE = 1f;
-    public static FloatTuple NORMAL_MOVES_IN = new FloatTuple(1f, 0.2f);
+    public static final FloatTuple NORMAL_MOVES_EVERY = new NormalMovesEvery();
     private GameConfig(){}
 }
