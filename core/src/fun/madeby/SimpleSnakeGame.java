@@ -1,6 +1,8 @@
 package fun.madeby;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Logger;
@@ -13,8 +15,8 @@ public class SimpleSnakeGame extends Game {
     private SpriteBatch batch;
     @Override
     public void create() {
-        //todo if debugger not working
-        //Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        // Set log level for entire application, removal removes all logging at level:
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
         assetManager = new AssetManager();
         assetManager.getLogger().setLevel(Logger.DEBUG);

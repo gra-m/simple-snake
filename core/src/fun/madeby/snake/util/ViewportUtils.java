@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 public class ViewportUtils {
 
-    private static final Logger log = new Logger(ViewportUtils.class.getName(), Logger.DEBUG);
+    private static final Logger LOG = new Logger(ViewportUtils.class.getName(), Logger.DEBUG);
 
     private static final int DEFAULT_CELL_SIZE = 1;
 
@@ -106,7 +106,7 @@ public class ViewportUtils {
         float xPPU = screenWidth / worldWidth;
         float yPPU = screenHeight / worldHeight;
 
-        log.debug("x PPU= " + xPPU + " yPPU= " + yPPU);
+        LOG.debug("x PPU= " + xPPU + " yPPU= " + yPPU);
     }
 
     private ViewportUtils() {

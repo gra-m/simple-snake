@@ -1,13 +1,17 @@
 package fun.madeby.snake.game;
 
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.entity.SnakeHead;
 import fun.madeby.snake.util.GdxUtils;
 import fun.madeby.snake.util.ViewportUtils;
 import fun.madeby.snake.util.debug.DebugCameraController;
@@ -18,6 +22,7 @@ import fun.madeby.snake.util.debug.DebugCameraController;
  * A class for everything related to rendering in the game so all textures etc
  */
 public class GameRenderer implements Disposable {
+    private static final Logger LOG = new Logger(GameRenderer.class.getName(), Logger.DEBUG);
     private final GameController controller;
 
     private OrthographicCamera camera;
@@ -45,27 +50,50 @@ public class GameRenderer implements Disposable {
 
         GdxUtils.clearScreen();
 
-        // test code
-        viewport.apply();
-        renderer.setProjectionMatrix(camera.combined);
-        renderer.begin(ShapeRenderer.ShapeType.Line);
-
-        renderer.circle(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y, 4, 30);
-
-        renderer.end();
 
         renderDebug();
     }
 
     private void renderDebug() {
+
+        viewport.apply();
         ViewportUtils.drawGrid(viewport, renderer);
+
+
+        Color oldColor = renderer.getColor().cpy();
+
+        renderer.setProjectionMatrix(camera.combined);
+        renderer.begin(ShapeRenderer.ShapeType.Line);
+
+        drawDebug();
+
+        renderer.end();
+
+        renderer.setColor(oldColor);
+
+
+
+    }
+
+    private void drawDebug() {
+        renderer.setColor(Color.RED);
+
+        // draw object positionj
+        SnakeHead head = controller.getHead();
+        renderer.rect(head.getX(), head.getY(), head.getWidth(), head.getHeight());
+
+        // draw bounds position if you see red and green summat wrong.
+        Rectangle headBounds = head.getBoundsForCollisionDetection();
+        renderer.setColor(Color.GREEN);
+        renderer.rect(headBounds.x, headBounds.y, headBounds.getWidth(), headBounds.getHeight());
+
     }
 
     // called at start of game and for any subsequent resize event.
     public void resize(int width, int height) {
         viewport.update(width, height, true);
 
-        // tell us ppu
+        LOG.debug("Getting game Pixels per unit from debugPixelsPerUnit(viewport): ");
         ViewportUtils.debugPixelsPerUnit(viewport);
     }
 
