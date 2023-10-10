@@ -48,7 +48,7 @@ public class GameRenderer implements Disposable {
         // test code
         viewport.apply();
         renderer.setProjectionMatrix(camera.combined);
-        renderer.begin();
+        renderer.begin(ShapeRenderer.ShapeType.Line);
 
         renderer.circle(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y, 4, 30);
 
