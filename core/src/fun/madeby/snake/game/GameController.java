@@ -26,7 +26,22 @@ public class GameController {
            timer = 0;
            // GameControl moving head on every timer threshold pass
            head.move();
+           
+           checkOutOfBounds();
        }
+    }
+
+    private void checkOutOfBounds() {
+        if (head.getX() >= GameConfig.WORLD_WIDTH) {
+            head.setX(0);
+        } else if (head.getX() < 0)
+            head.setX(GameConfig.WORLD_WIDTH - GameConfig.SNAKE_SIZE);
+
+        if (head.getY() >= GameConfig.WORLD_HEIGHT) {
+            head.setY(0);
+        } else if (head.getY() < 0)
+            head.setY(GameConfig.WORLD_HEIGHT - GameConfig.SNAKE_SIZE);
+
     }
 
     private void getDirectionAtThisTickFromInput() {

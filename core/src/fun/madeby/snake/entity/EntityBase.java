@@ -40,8 +40,18 @@ public abstract class EntityBase {
         return x;
     }
 
+    public void setX(float x) {
+        this.x = x;
+        updateBoundsForCollisionDetection();
+    }
+
     public float getY() {
         return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+        updateBoundsForCollisionDetection();
     }
 
     public float getWidth() {
