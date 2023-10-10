@@ -1,4 +1,4 @@
-package fun.madeby;
+package fun.madeby.snake;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
