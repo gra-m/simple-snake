@@ -8,4 +8,9 @@ public class SnakeHead extends EntityBase{
         super.setSize(GameConfig.SNAKE_SIZE, GameConfig.SNAKE_SIZE);
     }
 
+    public void updateX(float amount) {
+        x += amount;
+        updateBoundsForCollisionDetection();
+    }
+
 }

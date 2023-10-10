@@ -32,7 +32,7 @@ public abstract class EntityBase {
         updateBoundsForCollisionDetection();
     }
 
-    private void updateBoundsForCollisionDetection() {
+    public void updateBoundsForCollisionDetection() {
         boundsForCollisionDetection.set(getX(), getY(), getWidth(), getHeight());
     }
 
