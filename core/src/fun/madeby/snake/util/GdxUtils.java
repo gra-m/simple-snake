@@ -1,4 +1,4 @@
-package fun.madeby.util;
+package fun.madeby.snake.util;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

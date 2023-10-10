@@ -1,5 +1,6 @@
 package fun.madeby.snake.game;
 
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
@@ -7,6 +8,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.util.GdxUtils;
+import fun.madeby.snake.util.ViewportUtils;
 import fun.madeby.snake.util.debug.DebugCameraController;
 
 // super dispose in game disposes game screen and this dispose
@@ -30,6 +33,32 @@ public class GameRenderer implements Disposable {
 
         debugCameraController = new DebugCameraController();
         debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
+    }
+
+    public void render(float delta) {
+        debugCameraController.handleDebugInput(delta);
+        debugCameraController.applyTo(camera);
+
+        GdxUtils.clearScreen();
+
+        // test code
+        viewport.apply();
+        renderer.setProjectionMatrix(camera.combined);
+        renderer.begin();
+
+        renderer.circle(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y, 4, 30);
+
+        renderer.end();
+
+        renderDebug();
+    }
+
+    // called at start of game and for any subsequent resize event.
+    public void resize(int width, int height) {
+        viewport.update(width, height, true);
+
+        // tell us ppu
+        ViewportUtils.debugPixelsPerUnit(viewport);
     }
 
 
