@@ -83,6 +83,7 @@ public class GameRenderer implements Disposable {
         SnakeHead head = snake.getHead();
         Coin coin = controller.getCoin();
 
+        // Render Body 1st
         renderer.setColor(Color.PURPLE);
         for (BodyPart bodyPart : snake.getBodyParts()){
             Rectangle bodyPartBounds = bodyPart.getBoundsThatAreUsedForCollisionDetection();
@@ -93,11 +94,13 @@ public class GameRenderer implements Disposable {
         renderer.setColor(Color.RED);
         renderer.rect(head.getX(), head.getY(), head.getWidth(), head.getHeight());
         renderer.rect(coin.getX(), coin.getY(), coin.getWidth(), coin.getHeight());
-        // draw bounds position if you see red and green or blue something wrong.
+        // draw bounds position if you see red as well as green or blue something wrong.
         Rectangle headBounds = head.getBoundsThatAreUsedForCollisionDetection();
         Rectangle coinBounds = coin.getBoundsThatAreUsedForCollisionDetection();
+        // Render head 2nd
         renderer.setColor(Color.GREEN);
         renderer.rect(headBounds.x, headBounds.y, headBounds.getWidth(), headBounds.getHeight());
+        // Render body 3rd
         renderer.setColor(Color.BLUE);
         renderer.rect(coinBounds.x, coinBounds.y, coinBounds.getWidth(), coinBounds.getHeight());
 
