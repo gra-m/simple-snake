@@ -32,7 +32,7 @@ public class Snake extends EntityBase{
             head.updateX(GameConfig.NORMAL_MOVES_EVERY.moves);
         }else if (direction.isUp()) {
             head.updateY(GameConfig.NORMAL_MOVES_EVERY.moves);
-        } else {
+        } else if (direction.isDown()){
             head.updateY(-GameConfig.NORMAL_MOVES_EVERY.moves);
         }
         
