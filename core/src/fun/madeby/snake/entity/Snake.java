@@ -82,4 +82,8 @@ public class Snake extends EntityBase{
     public SnakeHead getHead() {
         return head;
     }
+
+    public Direction getDirection() {
+        return direction;
+    }
 }

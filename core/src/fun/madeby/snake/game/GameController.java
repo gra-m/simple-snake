@@ -113,18 +113,19 @@ public class GameController {
     }
 
     private void getDirectionAtThisTickFromInput() {
+        Direction currentDirection = snake.getDirection();
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.UP);
         boolean downPressed = Gdx.input.isKeyPressed(Input.Keys.DOWN);
 
-        if (leftPressed)
+        if (leftPressed && currentDirection != Direction.RIGHT)
             snake.setDirection(Direction.LEFT);
-        else if (rightPressed)
+        else if (rightPressed && currentDirection != Direction.LEFT)
             snake.setDirection(Direction.RIGHT);
-        else if (upPressed)
+        else if (upPressed && currentDirection != Direction.DOWN)
             snake.setDirection(Direction.UP);
-        else if (downPressed)
+        else if (downPressed && currentDirection != Direction.UP)
             snake.setDirection(Direction.DOWN);
 
 
