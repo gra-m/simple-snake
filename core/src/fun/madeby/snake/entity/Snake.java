@@ -53,6 +53,12 @@ public class Snake extends EntityBase{
         }
     }
 
+    public void reset() {
+        bodyParts.clear();
+        direction = Direction.RIGHT;
+        head.setPosition(0,0);
+    }
+
     public void setDirection(Direction direction) {
         this.direction = direction;
     }

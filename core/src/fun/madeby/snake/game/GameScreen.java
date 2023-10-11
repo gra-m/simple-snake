@@ -23,7 +23,6 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         // only instantiated when screen needs to be shown
-        GameManager.INSTANCE.setPlaying();
         controller = new GameController();
         renderer = new GameRenderer(controller);
     }

@@ -42,7 +42,24 @@ public class GameController {
                 checkCollision();
             }
             spawnCoin();
+        } else {
+            checkForRestart();
         }
+    }
+
+    private void checkForRestart() {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            restart();
+        }
+        // android check screen touched.
+
+    }
+
+    private void restart() {
+        GameManager.INSTANCE.setPlaying();
+        snake.reset();
+        coin.setAvailableToEat(false);
+        timer = 0;
     }
 
     private void checkIfManualDebugCoinAddition() {

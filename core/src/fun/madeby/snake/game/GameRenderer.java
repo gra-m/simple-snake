@@ -100,9 +100,11 @@ public class GameRenderer implements Disposable {
         // Render head 2nd
         renderer.setColor(Color.GREEN);
         renderer.rect(headBounds.x, headBounds.y, headBounds.getWidth(), headBounds.getHeight());
-        // Render body 3rd
-        renderer.setColor(Color.BLUE);
-        renderer.rect(coinBounds.x, coinBounds.y, coinBounds.getWidth(), coinBounds.getHeight());
+        // Render coin 3rd
+        if (coin.isAvailableToEat()) {
+            renderer.setColor(Color.BLUE);
+            renderer.rect(coinBounds.x, coinBounds.y, coinBounds.getWidth(), coinBounds.getHeight());
+        }
 
 
     }
