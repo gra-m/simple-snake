@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.entity.Coin;
 import fun.madeby.snake.entity.SnakeHead;
 import fun.madeby.snake.util.GdxUtils;
 import fun.madeby.snake.util.ViewportUtils;
@@ -78,15 +79,17 @@ public class GameRenderer implements Disposable {
     private void drawDebug() {
         renderer.setColor(Color.RED);
 
-        // draw object positionj
         SnakeHead head = controller.getHead();
+        Coin coin = controller.getCoin();
         renderer.rect(head.getX(), head.getY(), head.getWidth(), head.getHeight());
-
+        renderer.rect(coin.getX(), coin.getY(), coin.getWidth(), coin.getHeight());
         // draw bounds position if you see red and green summat wrong.
         Rectangle headBounds = head.getBoundsForCollisionDetection();
+        Rectangle coinBounds = coin.getBoundsForCollisionDetection();
         renderer.setColor(Color.GREEN);
         renderer.rect(headBounds.x, headBounds.y, headBounds.getWidth(), headBounds.getHeight());
-
+        renderer.setColor(Color.BLUE);
+        renderer.rect(coinBounds.x, coinBounds.y, coinBounds.getWidth(), coinBounds.getHeight());
     }
 
     // called at start of game and for any subsequent resize event.
