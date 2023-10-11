@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Logger;
 
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.entity.BodyPart;
 import fun.madeby.snake.entity.Coin;
 import fun.madeby.snake.entity.Direction;
 import fun.madeby.snake.entity.Snake;
@@ -15,7 +16,7 @@ import fun.madeby.snake.entity.SnakeHead;
 
 public class GameController {
 
-    private static final Logger LOG = new Logger(GameController.class.getName());
+    private static final Logger LOG = new Logger(GameController.class.getName(), Logger.DEBUG);
 
     private Snake snake;
     private Coin coin;
@@ -60,6 +61,15 @@ public class GameController {
         if (Intersector.overlaps(headBounds, coinBounds) && coin.isAvailableToEat()) {
             snake.insertNewBodyPart();
             coin.setAvailableToEat(false);
+        }
+
+        // head/body part collision
+        for (BodyPart bp : snake.getBodyParts()) {
+            Rectangle bodyPartBounds = bp.getBoundsThatAreUsedForCollisionDetection();
+            if (Intersector.overlaps(headBounds, bodyPartBounds)) {
+                //loseLife();
+                LOG.debug("Collision with bodypart!");
+            }
         }
     }
 
