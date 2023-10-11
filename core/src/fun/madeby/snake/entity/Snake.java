@@ -59,8 +59,13 @@ public class Snake extends EntityBase{
         head.setPosition(0,0);
     }
 
-    public void setDirection(Direction direction) {
-        this.direction = direction;
+    public void setDirection(Direction newDirection) {
+
+        if (bodyParts.size == 0) {
+            this.direction = newDirection;
+        } else if (direction.allowed(newDirection)) {
+           this.direction = newDirection;
+        }
     }
 
     public Array<BodyPart> getBodyParts() {
