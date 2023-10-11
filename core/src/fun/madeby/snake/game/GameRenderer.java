@@ -83,6 +83,11 @@ public class GameRenderer implements Disposable {
         SnakeHead head = snake.getHead();
         Coin coin = controller.getCoin();
 
+        renderer.setColor(Color.PURPLE);
+        for (BodyPart bodyPart : snake.getBodyParts()){
+            Rectangle bodyPartBounds = bodyPart.getBoundsThatAreUsedForCollisionDetection();
+            renderer.rect(bodyPartBounds.x, bodyPartBounds.y, bodyPartBounds.getWidth(), bodyPartBounds.getHeight());
+        }
 
 
         renderer.setColor(Color.RED);
@@ -95,12 +100,8 @@ public class GameRenderer implements Disposable {
         renderer.rect(headBounds.x, headBounds.y, headBounds.getWidth(), headBounds.getHeight());
         renderer.setColor(Color.BLUE);
         renderer.rect(coinBounds.x, coinBounds.y, coinBounds.getWidth(), coinBounds.getHeight());
-        renderer.setColor(Color.PURPLE);
 
-        for (BodyPart bodyPart : snake.getBodyParts()){
-            Rectangle bodyPartBounds = bodyPart.getBoundsThatAreUsedForCollisionDetection();
-            renderer.rect(bodyPartBounds.x, bodyPartBounds.y, bodyPartBounds.getWidth(), bodyPartBounds.getHeight());
-        }
+
     }
 
     // called at start of game and for any subsequent resize event.

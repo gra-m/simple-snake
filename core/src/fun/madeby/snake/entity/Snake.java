@@ -41,13 +41,13 @@ public class Snake extends EntityBase{
     }
 
     /**
-     * tail, if it exists, constantly has its position updated to the last position of the head that is
-     * retained in xBeforeUpdate and yBeforeUpdate
+     * Snake head moves, then tail, if it exists, constantly has its start position (the bodypart at position 0)
+     * updated to the last position of the head (retained in xBeforeUpdate and yBeforeUpdate);
      */
     private void updateBodyParts() {
         if (bodyParts.size > 0) {
             BodyPart  tail = bodyParts.removeIndex(0);
-            tail.setPosition(xBeforeUpdate, yBeforeUpdate);
+            //tail.setPosition(xBeforeUpdate, yBeforeUpdate);
             bodyParts.add(tail);
 
         }
