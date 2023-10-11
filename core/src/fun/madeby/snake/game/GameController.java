@@ -65,6 +65,10 @@ public class GameController {
 
         // head/body part collision
         for (BodyPart bp : snake.getBodyParts()) {
+            if (bp.getJustSpawnedAtHeadNoCollisionPossible()) {
+                bp.setJustSpawnedAtHeadNoCollisionPossible(false);
+                continue;
+            }
             Rectangle bodyPartBounds = bp.getBoundsThatAreUsedForCollisionDetection();
             if (Intersector.overlaps(headBounds, bodyPartBounds)) {
                 //loseLife();
