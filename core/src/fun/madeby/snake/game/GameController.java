@@ -36,14 +36,14 @@ public class GameController {
            snake.move();
            
            checkOutOfBounds();
-           checkCollision(false);
+           checkCollision();
        }
        spawnCoin();
     }
 
     private void checkIfManualDebugCoinAddition() {
-        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            checkCollision(true);
+        if(Gdx.input.isKeyPressed(Input.Keys.N)) {
+            snake.insertNewBodyPart();
         }
     }
 
@@ -51,13 +51,13 @@ public class GameController {
      * Collision type1: head/coin if collision with coin (head eats coin) insert new bodypart and set
      * coin to notAvailableToEat.
      */
-    private void checkCollision(boolean isDebugCoinAddition) {
+    private void checkCollision() {
         // head/coin collision
         SnakeHead head = snake.getHead();
         Rectangle headBounds = head.getBoundsThatAreUsedForCollisionDetection();
         Rectangle coinBounds = coin.getBoundsThatAreUsedForCollisionDetection();
 
-        if (Intersector.overlaps(headBounds, coinBounds) && coin.isAvailableToEat() || isDebugCoinAddition) {
+        if (Intersector.overlaps(headBounds, coinBounds) && coin.isAvailableToEat()) {
             snake.insertNewBodyPart();
             coin.setAvailableToEat(false);
         }
