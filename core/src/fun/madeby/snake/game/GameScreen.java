@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 
 import fun.madeby.SimpleSnakeGame;
+import fun.madeby.snake.common.GameManager;
 
 public class GameScreen extends ScreenAdapter {
     private final SimpleSnakeGame game;
@@ -22,6 +23,7 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         // only instantiated when screen needs to be shown
+        GameManager.INSTANCE.setPlaying();
         controller = new GameController();
         renderer = new GameRenderer(controller);
     }

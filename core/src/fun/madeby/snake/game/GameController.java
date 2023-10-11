@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Logger;
 
+import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.entity.BodyPart;
 import fun.madeby.snake.entity.Coin;
@@ -28,18 +29,20 @@ public class GameController {
     }
 
     public void update(float delta) {
-        getDirectionAtThisTickFromInput();
-        checkIfManualDebugCoinAddition();
-        timer += delta;
-       if (timer >= GameConfig.NORMAL_MOVES_EVERY.every)  {
-           timer = 0;
-           // GameControl moving head on every timer threshold pass
-           snake.move();
-           
-           checkOutOfBounds();
-           checkCollision();
-       }
-       spawnCoin();
+        if (GameManager.INSTANCE.isPlaying()) {
+            getDirectionAtThisTickFromInput();
+            checkIfManualDebugCoinAddition();
+            timer += delta;
+            if (timer >= GameConfig.NORMAL_MOVES_EVERY.every) {
+                timer = 0;
+                // GameControl moving head on every timer threshold pass
+                snake.move();
+
+                checkOutOfBounds();
+                checkCollision();
+            }
+            spawnCoin();
+        }
     }
 
     private void checkIfManualDebugCoinAddition() {
@@ -73,6 +76,7 @@ public class GameController {
             if (Intersector.overlaps(headBounds, bodyPartBounds)) {
                 //loseLife();
                 LOG.debug("Collision with bodypart!");
+                GameManager.INSTANCE.setGameOver();
             }
         }
     }
