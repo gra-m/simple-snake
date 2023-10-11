@@ -47,7 +47,7 @@ public class Snake extends EntityBase{
     private void updateBodyParts() {
         if (bodyParts.size > 0) {
             BodyPart  tail = bodyParts.removeIndex(0);
-            //tail.setPosition(xBeforeUpdate, yBeforeUpdate);
+            tail.setPosition(xBeforeUpdate, yBeforeUpdate);
             bodyParts.add(tail);
 
         }
