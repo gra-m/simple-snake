@@ -2,7 +2,9 @@ package fun.madeby.snake.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Logger;
 
 import fun.madeby.snake.config.GameConfig;
@@ -33,8 +35,25 @@ public class GameController {
            snake.move();
            
            checkOutOfBounds();
+           checkCollision();
        }
        spawnCoin();
+    }
+
+    /**
+     * Collision type1: head/coin if collision with coin (head eats coin) insert new bodypart and set
+     * coin to notAvailableToEat.
+     */
+    private void checkCollision() {
+        // head/coin collision
+        SnakeHead head = snake.getHead();
+        Rectangle headBounds = head.getBoundsThatAreUsedForCollisionDetection();
+        Rectangle coinBounds = coin.getBoundsThatAreUsedForCollisionDetection();
+
+        if (Intersector.overlaps(headBounds, coinBounds) && coin.isAvailableToEat()) {
+            snake.insertNewBodyPart();
+            coin.setAvailableToEat(false);
+        }
     }
 
     private void checkOutOfBounds() {

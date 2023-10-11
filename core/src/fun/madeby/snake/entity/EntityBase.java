@@ -62,7 +62,7 @@ public abstract class EntityBase {
         return height;
     }
 
-    public Rectangle getBoundsForCollisionDetection() {
+    public Rectangle getBoundsThatAreUsedForCollisionDetection() {
         return boundsForCollisionDetection;
     }
 }

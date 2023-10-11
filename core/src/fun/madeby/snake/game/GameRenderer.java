@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.entity.BodyPart;
 import fun.madeby.snake.entity.Coin;
 import fun.madeby.snake.entity.Snake;
 import fun.madeby.snake.entity.SnakeHead;
@@ -78,16 +79,22 @@ public class GameRenderer implements Disposable {
     }
 
     private void drawDebug() {
-        renderer.setColor(Color.RED);
         Snake snake = controller.getSnake();
         SnakeHead head = snake.getHead();
-
         Coin coin = controller.getCoin();
+
+        renderer.setColor(Color.PURPLE);
+        for (BodyPart bodyPart : snake.getBodyParts()){
+            Rectangle bodyPartBounds = bodyPart.getBoundsThatAreUsedForCollisionDetection();
+            renderer.rect(bodyPartBounds.x, bodyPartBounds.y, bodyPartBounds.getWidth(), bodyPartBounds.getHeight());
+        }
+
+        renderer.setColor(Color.RED);
         renderer.rect(head.getX(), head.getY(), head.getWidth(), head.getHeight());
         renderer.rect(coin.getX(), coin.getY(), coin.getWidth(), coin.getHeight());
-        // draw bounds position if you see red and green summat wrong.
-        Rectangle headBounds = head.getBoundsForCollisionDetection();
-        Rectangle coinBounds = coin.getBoundsForCollisionDetection();
+        // draw bounds position if you see red and green or blue something wrong.
+        Rectangle headBounds = head.getBoundsThatAreUsedForCollisionDetection();
+        Rectangle coinBounds = coin.getBoundsThatAreUsedForCollisionDetection();
         renderer.setColor(Color.GREEN);
         renderer.rect(headBounds.x, headBounds.y, headBounds.getWidth(), headBounds.getHeight());
         renderer.setColor(Color.BLUE);
