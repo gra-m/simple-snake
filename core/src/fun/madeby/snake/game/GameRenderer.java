@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.entity.Coin;
+import fun.madeby.snake.entity.Snake;
 import fun.madeby.snake.entity.SnakeHead;
 import fun.madeby.snake.util.GdxUtils;
 import fun.madeby.snake.util.ViewportUtils;
@@ -78,8 +79,9 @@ public class GameRenderer implements Disposable {
 
     private void drawDebug() {
         renderer.setColor(Color.RED);
+        Snake snake = controller.getSnake();
+        SnakeHead head = snake.getHead();
 
-        SnakeHead head = controller.getHead();
         Coin coin = controller.getCoin();
         renderer.rect(head.getX(), head.getY(), head.getWidth(), head.getHeight());
         renderer.rect(coin.getX(), coin.getY(), coin.getWidth(), coin.getHeight());

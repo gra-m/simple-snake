@@ -8,18 +8,19 @@ import com.badlogic.gdx.utils.Logger;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.entity.Coin;
 import fun.madeby.snake.entity.Direction;
+import fun.madeby.snake.entity.Snake;
 import fun.madeby.snake.entity.SnakeHead;
 
 public class GameController {
 
     private static final Logger LOG = new Logger(GameController.class.getName());
 
-    private SnakeHead head;
+    private Snake snake;
     private Coin coin;
     private float timer;
 
     public GameController() {
-        this.head = new SnakeHead();
+        this.snake = new Snake();
         this.coin = new Coin();
     }
 
@@ -29,7 +30,7 @@ public class GameController {
        if (timer >= GameConfig.NORMAL_MOVES_EVERY.every)  {
            timer = 0;
            // GameControl moving head on every timer threshold pass
-           head.move();
+           snake.move();
            
            checkOutOfBounds();
        }
@@ -37,6 +38,7 @@ public class GameController {
     }
 
     private void checkOutOfBounds() {
+        SnakeHead head = snake.getHead();
         if (head.getX() >= GameConfig.WORLD_WIDTH) {
             head.setX(0);
         } else if (head.getX() < 0)
@@ -56,20 +58,20 @@ public class GameController {
         boolean downPressed = Gdx.input.isKeyPressed(Input.Keys.DOWN);
 
         if (leftPressed)
-            head.setDirection(Direction.LEFT);
+            snake.setDirection(Direction.LEFT);
         else if (rightPressed)
-            head.setDirection(Direction.RIGHT);
+            snake.setDirection(Direction.RIGHT);
         else if (upPressed)
-            head.setDirection(Direction.UP);
+            snake.setDirection(Direction.UP);
         else if (downPressed)
-            head.setDirection(Direction.DOWN);
+            snake.setDirection(Direction.DOWN);
 
 
 
     }
 
-    public SnakeHead getHead() {
-        return head;
+    public Snake getSnake() {
+        return snake;
     }
 
     public Coin getCoin() {
