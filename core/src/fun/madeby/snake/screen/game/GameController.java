@@ -58,7 +58,7 @@ public class GameController {
     }
 
     private void restart() {
-        GameManager.INSTANCE.setPlaying();
+        GameManager.INSTANCE.reset();
         snake.reset();
         coin.setAvailableToEat(false);
         timer = 0;

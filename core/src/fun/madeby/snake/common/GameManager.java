@@ -9,10 +9,52 @@ public class GameManager {
     public boolean isReady(){return state.isReady();}
     public boolean isPlaying(){return state.isPlaying();}
     public boolean isGameOver(){return state.isGameOver();}
+    private int score;
+    private int displayScore;
+    private int highScore;
+    private int displayHighScore;
 
     public void setPlaying() {
         state = GameState.PLAYING;}
     public void setGameOver() {
         state = GameState.GAME_OVER;}
+
+
+    public int getDisplayScore() {
+        return displayScore;
+    }
+
+    public int getDisplayHighScore() {
+        return displayHighScore;
+    }
+
+    public void incrementScore(int amount) {
+        score += amount;
+
+        if(score >= highScore) {
+            highScore = score;
+        }
+    }
+
+    public void reset() {
+        setPlaying();
+        score = 0;
+        displayScore = 0;
+    }
+
+    public void smoothTheDisplayScore(float delta) {
+
+        // stops jumps of say 20 directly hitting displays, drip feeds score increases.
+
+        if(displayScore < score) {
+            displayScore = Math.min(score, (displayScore + (int) (100 * delta)) );
+        }
+
+        if(displayHighScore < score) {
+            displayHighScore = Math.min(score, (displayHighScore + (int) (100 * delta)) );
+        }
+
+    }
+
 
 }
