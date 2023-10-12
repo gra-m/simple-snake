@@ -90,6 +90,9 @@ public class LoadingScreen extends ScreenAdapter {
         progress = assetManager.getProgress();
 
 
+        if (progress == 1.0f)
+            LOG.debug("Progress: " + progress);
+
         // progress == 1.0f does not work here for some reason, can print log with it though
         if (assetManager.update()  && waitedSoFar >= ensureProgressBarSeenWaitTime ) {
             waitCompletedAndAllActionsOnThisScreenCompleted = true;
