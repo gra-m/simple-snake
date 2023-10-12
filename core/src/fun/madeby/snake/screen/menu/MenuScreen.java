@@ -23,6 +23,7 @@ import fun.madeby.snake.assets.AssetDescriptors;
 import fun.madeby.snake.assets.ButtonStyleNames;
 import fun.madeby.snake.assets.RegionNames;
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.screen.game.GameScreen;
 
 public class MenuScreen extends ScreenAdapter {
     private final SimpleSnakeGame game;
@@ -89,8 +90,17 @@ public class MenuScreen extends ScreenAdapter {
         return menuActorTable;
     }
 
+    private void play() {
+        game.setScreen(new GameScreen(game));
+    }
+
+    private void quit() {
+        Gdx.app.exit();
+    }
+
     @Override
     public void resize(int width, int height) {
+        viewport.update(width, height);
 
     }
 
