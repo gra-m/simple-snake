@@ -28,8 +28,14 @@ public class GameRenderer implements Disposable {
     private static final Logger LOG = new Logger(GameRenderer.class.getName(), Logger.DEBUG);
     private final GameController controller;
 
+    // Rendering  for GAME
     private OrthographicCamera camera;
     private Viewport viewport;
+
+    // Rendering  for HUD
+    //private OrthographicCamera hudCamera;
+    private Viewport hudViewport;
+
     private ShapeRenderer renderer;
     private DebugCameraController debugCameraController;
 
@@ -40,7 +46,9 @@ public class GameRenderer implements Disposable {
 
     private void init() {
         camera = new OrthographicCamera();
+        //hudCamera = new OrthographicCamera();
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
+        hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         renderer = new ShapeRenderer();
 
         debugCameraController = new DebugCameraController();
