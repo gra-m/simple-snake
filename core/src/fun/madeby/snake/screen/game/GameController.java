@@ -1,4 +1,4 @@
-package fun.madeby.snake.game;
+package fun.madeby.snake.screen.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -49,6 +49,8 @@ public class GameController {
 
     private void checkForRestart() {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            restart();
+        } else if (Gdx.input.isTouched()) {
             restart();
         }
         // android check screen touched.
