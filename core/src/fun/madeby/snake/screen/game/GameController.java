@@ -96,8 +96,7 @@ public class GameController {
             }
             Rectangle bodyPartBounds = bp.getBoundsThatAreUsedForCollisionDetection();
             if (Intersector.overlaps(headBounds, bodyPartBounds)) {
-                //loseLife();
-                LOG.debug("Collision with bodypart!");
+                LOG.debug("Collision with bodypart! ITS Overrrrr!");
                 GameManager.INSTANCE.setGameOver();
             }
         }
