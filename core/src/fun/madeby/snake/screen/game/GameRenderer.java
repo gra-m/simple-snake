@@ -167,6 +167,7 @@ public class GameRenderer implements Disposable {
 
         LOG.debug("Getting game Pixels per unit from debugPixelsPerUnit(viewport): ");
         ViewportUtils.debugPixelsPerUnit(viewport);
+        ViewportUtils.debugPixelsPerUnit(hudViewport);
     }
 
 
