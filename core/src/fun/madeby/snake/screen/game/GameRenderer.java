@@ -92,10 +92,16 @@ public class GameRenderer implements Disposable {
         String scoreString = "SCORE: " + GameManager.INSTANCE.getDisplayScore();
         String highScoreString = "HIGH-SCORE: " + GameManager.INSTANCE.getDisplayHighScore();
 
-        layout.setText(font, highScoreString);
+        float allHudTextY = hudViewport.getWorldHeight() - GameConfig.HUD_PADDING;
+        float highScoreX = GameConfig.HUD_PADDING;
 
-        font.draw(batch, layout, GameConfig.HUD_PADDING,
-               hudViewport.getWorldHeight() - GameConfig.HUD_PADDING);
+        layout.setText(font, highScoreString);
+        font.draw(batch, layout, highScoreX, allHudTextY);
+
+        layout.setText(font, scoreString);
+        float scoreX = hudViewport.getWorldWidth() - (layout.width + GameConfig.HUD_PADDING);
+
+        font.draw(batch, layout, scoreX, allHudTextY);
 
 
 
@@ -157,7 +163,7 @@ public class GameRenderer implements Disposable {
     // called at start of game and for any subsequent resize event.
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-        //hudViewport.update(width, height, true);
+        hudViewport.update(width, height, true);
 
         LOG.debug("Getting game Pixels per unit from debugPixelsPerUnit(viewport): ");
         ViewportUtils.debugPixelsPerUnit(viewport);
