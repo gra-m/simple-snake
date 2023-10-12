@@ -12,6 +12,7 @@ import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.assets.AssetDescriptors;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.screen.game.GameScreen;
+import fun.madeby.snake.screen.menu.MenuScreen;
 import fun.madeby.snake.util.GdxUtils;
 
 public class LoadingScreen extends ScreenAdapter {
@@ -74,7 +75,7 @@ public class LoadingScreen extends ScreenAdapter {
         renderer.end();
 
         if (waitCompletedAndAllActionsOnThisScreenCompleted) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new MenuScreen(game));
         }
     }
 

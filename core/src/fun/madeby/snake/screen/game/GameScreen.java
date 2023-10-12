@@ -4,6 +4,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 
 import fun.madeby.SimpleSnakeGame;
+import fun.madeby.snake.common.GameManager;
+import fun.madeby.snake.screen.menu.MenuScreen;
 
 public class GameScreen extends ScreenAdapter {
     private final SimpleSnakeGame game;
@@ -15,6 +17,7 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(SimpleSnakeGame simpleSnakeGame) {
         this.game = simpleSnakeGame;
         this.assetManager = game.getAssetManager();
+        GameManager.INSTANCE.setPlaying();
     }
 
 
@@ -31,7 +34,13 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta) {
         controller.update(delta);
         renderer.render(delta);
+        if (GameManager.INSTANCE.isGameOver()) {
+            game.setScreen(new MenuScreen(game));
+        }
     }
+
+
+
 
     @Override
     public void resize(int width, int height) {

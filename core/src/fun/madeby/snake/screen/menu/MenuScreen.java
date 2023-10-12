@@ -24,6 +24,7 @@ import fun.madeby.snake.assets.ButtonStyleNames;
 import fun.madeby.snake.assets.RegionNames;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.screen.game.GameScreen;
+import fun.madeby.snake.util.GdxUtils;
 
 public class MenuScreen extends ScreenAdapter {
     private final SimpleSnakeGame game;
@@ -37,6 +38,14 @@ public class MenuScreen extends ScreenAdapter {
     public MenuScreen(SimpleSnakeGame simpleSnakeGame) {
         this.game = simpleSnakeGame;
         this.assetManager = game.getAssetManager();
+    }
+
+    @Override
+    public void render(float delta) {
+        GdxUtils.clearScreen();
+        viewport.apply();
+        stage.act();
+        stage.draw();
     }
 
     @Override
@@ -55,7 +64,7 @@ public class MenuScreen extends ScreenAdapter {
 
         // create and activate elements
         Table menuActorTable = new Table(skin);
-        TextureRegion background = assetManager.get(RegionNames.BACKGROUND);
+        TextureRegion background = gameplayAtlas.findRegion(RegionNames.BACKGROUND);
         TextureRegionDrawable tableBackground = new TextureRegionDrawable(background);
         Image titleImage = new Image(skin, RegionNames.TITLE);
         Button playButton = new Button(skin, ButtonStyleNames.PLAY);
@@ -82,8 +91,8 @@ public class MenuScreen extends ScreenAdapter {
         menuActorTable.setFillParent(true);
 
         // pack table
-        menuActorTable.add(titleImage);
-        menuActorTable.add(playButton);
+        menuActorTable.add(titleImage).row();
+        menuActorTable.add(playButton).row();
         menuActorTable.add(quitButton);
         menuActorTable.pack();
 
