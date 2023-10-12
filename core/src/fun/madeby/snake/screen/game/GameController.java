@@ -110,10 +110,10 @@ public class GameController {
         } else if (head.getX() < 0)
             head.setX(GameConfig.WORLD_WIDTH - GameConfig.SNAKE_SIZE);
 
-        if (head.getY() >= GameConfig.WORLD_HEIGHT - GameConfig.NO_SNAKE_UNDER_SCORE_TEXT) {
+        if (head.getY() >=  GameConfig.Y_CONSTRAINED) {
             head.setY(0);
         } else if (head.getY() < 0)
-            head.setY(GameConfig.WORLD_HEIGHT - (GameConfig.NO_SNAKE_UNDER_SCORE_TEXT + GameConfig.SNAKE_SIZE));
+            head.setY(GameConfig.Y_CONSTRAINED - GameConfig.SNAKE_SIZE);
 
     }
 
@@ -147,7 +147,7 @@ public class GameController {
     public void spawnCoin() {
         if(!coin.isAvailableToEat()) {
             float coinX = MathUtils.random((int) (GameConfig.WORLD_WIDTH - GameConfig.COIN_SIZE));
-            float coinY = MathUtils.random((int) (GameConfig.WORLD_HEIGHT - (GameConfig.NO_SNAKE_UNDER_SCORE_TEXT + GameConfig.COIN_SIZE)));
+            float coinY = MathUtils.random((int) (GameConfig.Y_CONSTRAINED));
             coin.setAvailableToEat(true);
 
             coin.setPosition(coinX, coinY);
