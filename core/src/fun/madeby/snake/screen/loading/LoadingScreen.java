@@ -31,7 +31,7 @@ public class LoadingScreen extends ScreenAdapter {
     private float ensureProgressBarSeenWaitTime = 0.75f;
     private float waitedSoFar;
     // safe to screen swap flag e.g. disposing screen before render.end() == crash
-    //private boolean waitCompletedAndAllActionsOnThisScreenCompleted;
+    private boolean waitCompletedAndAllActionsOnThisScreenCompleted;
 
 
     public LoadingScreen(SimpleSnakeGame simpleSnakeGame) {
@@ -75,9 +75,9 @@ public class LoadingScreen extends ScreenAdapter {
 
         renderer.end();
 
-      /*  if (waitCompletedAndAllActionsOnThisScreenCompleted) {
+        if (waitCompletedAndAllActionsOnThisScreenCompleted) {
             game.setScreen(new GameScreen(game));
-        }*/
+        }
 
     }
 
@@ -92,7 +92,7 @@ public class LoadingScreen extends ScreenAdapter {
 
         // progress == 1.0f does not work here for some reason, can print log with it though
         if (assetManager.update()  && waitedSoFar >= ensureProgressBarSeenWaitTime ) {
-            game.setScreen(new GameScreen(game));
+            waitCompletedAndAllActionsOnThisScreenCompleted = true;
         }
     }
 
