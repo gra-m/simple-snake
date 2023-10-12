@@ -30,7 +30,6 @@ public class LoadingScreen extends ScreenAdapter {
     private float progress;
     private float ensureProgressBarSeenWaitTime = 0.75f;
     private float waitedSoFar;
-    // safe to screen swap flag e.g. disposing screen before render.end() == crash
     private boolean waitCompletedAndAllActionsOnThisScreenCompleted;
 
 
@@ -45,9 +44,6 @@ public class LoadingScreen extends ScreenAdapter {
         viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT, camera);
         renderer = new ShapeRenderer();
         assetManager.load(AssetDescriptors.UI_FONT);
-
-
-
     }
 
     @Override
@@ -78,7 +74,6 @@ public class LoadingScreen extends ScreenAdapter {
         if (waitCompletedAndAllActionsOnThisScreenCompleted) {
             game.setScreen(new GameScreen(game));
         }
-
     }
 
     /**
@@ -89,11 +84,6 @@ public class LoadingScreen extends ScreenAdapter {
         waitedSoFar += delta;
         progress = assetManager.getProgress();
 
-
-        if (progress == 1.0f)
-            LOG.debug("Progress: " + progress);
-
-        // progress == 1.0f does not work here for some reason, can print log with it though
         if (assetManager.update()  && waitedSoFar >= ensureProgressBarSeenWaitTime ) {
             waitCompletedAndAllActionsOnThisScreenCompleted = true;
         }
