@@ -28,12 +28,12 @@ public class GameManager {
         return displayHighScore;
     }
 
-    public void incrementScore(int amount) {
+    public void incrementScore(int amount, float delta) {
         score += amount;
-
         if(score >= highScore) {
             highScore = score;
         }
+        smoothDisplayScores(delta);
     }
 
     public void reset() {
@@ -42,7 +42,7 @@ public class GameManager {
         displayScore = 0;
     }
 
-    public void smoothTheDisplayScore(float delta) {
+    public void smoothDisplayScores(float delta) {
 
         // stops jumps of say 20 directly hitting displays, drip feeds score increases.
 

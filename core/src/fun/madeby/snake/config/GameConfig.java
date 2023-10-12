@@ -20,5 +20,6 @@ public class GameConfig {
     public static final FloatTuple NORMAL_MOVES_EVERY = new NormalMovesEvery();
     //Coin
     public static final float COIN_SIZE = 1f;
+    public static final int VOTES_SHOULD_ONLY_BE_INTEGERS = 20;
     private GameConfig(){}
 }
