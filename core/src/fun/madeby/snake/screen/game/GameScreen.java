@@ -22,7 +22,7 @@ public class GameScreen extends ScreenAdapter {
     public void show() {
         // only instantiated when screen needs to be shown
         controller = new GameController();
-        renderer = new GameRenderer(controller);
+        renderer = new GameRenderer(controller, this.game.getBatch(), this.game.getAssetManager());
     }
 
     // the nexus, where render called automatically for this screen splits game logic/model (controller)

@@ -1,8 +1,12 @@
 package fun.madeby.snake.screen.game;
 
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
@@ -10,6 +14,8 @@ import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import fun.madeby.snake.assets.AssetDescriptors;
+import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.entity.BodyPart;
 import fun.madeby.snake.entity.Coin;
@@ -27,29 +33,36 @@ import fun.madeby.snake.util.debug.DebugCameraController;
 public class GameRenderer implements Disposable {
     private static final Logger LOG = new Logger(GameRenderer.class.getName(), Logger.DEBUG);
     private final GameController controller;
+    private final AssetManager assetManager;
 
-    // Rendering  for GAME
+    // Rendering for  GAME
     private OrthographicCamera camera;
     private Viewport viewport;
-
-    // Rendering  for HUD
-    //private OrthographicCamera hudCamera;
-    private Viewport hudViewport;
-
+    // debug wireframe and bounds for collision
     private ShapeRenderer renderer;
     private DebugCameraController debugCameraController;
+    private final SpriteBatch batch;
 
-    public GameRenderer(GameController gameController) {
+    // Rendering for HUD
+    private Viewport hudViewport;
+    private BitmapFont font;
+    private GlyphLayout layout = new GlyphLayout();
+
+
+
+    public GameRenderer(GameController gameController, SpriteBatch spriteBatch, AssetManager assetManager) {
         this.controller = gameController;
+        this.batch = spriteBatch;
+        this.assetManager = assetManager;
         init();
     }
 
     private void init() {
         camera = new OrthographicCamera();
-        //hudCamera = new OrthographicCamera();
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
         hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         renderer = new ShapeRenderer();
+        font = assetManager.get(AssetDescriptors.UI_FONT);
 
         debugCameraController = new DebugCameraController();
         debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
@@ -61,8 +74,32 @@ public class GameRenderer implements Disposable {
 
         GdxUtils.clearScreen();
 
-
+        renderHUD();
         renderDebug();
+    }
+
+    private void renderHUD() {
+        hudViewport.apply();
+        batch.setProjectionMatrix(hudViewport.getCamera().combined);
+
+        batch.begin();
+        drawHUD();
+
+        batch.end();
+    }
+
+    private void drawHUD() {
+        String scoreString = "SCORE: " + GameManager.INSTANCE.getDisplayScore();
+        String highScoreString = "HIGH-SCORE: " + GameManager.INSTANCE.getDisplayHighScore();
+
+        layout.setText(font, highScoreString);
+
+        font.draw(batch, layout, GameConfig.HUD_PADDING,
+               hudViewport.getWorldHeight() - GameConfig.HUD_PADDING);
+
+
+
+
     }
 
     private void renderDebug() {
@@ -120,6 +157,7 @@ public class GameRenderer implements Disposable {
     // called at start of game and for any subsequent resize event.
     public void resize(int width, int height) {
         viewport.update(width, height, true);
+        //hudViewport.update(width, height, true);
 
         LOG.debug("Getting game Pixels per unit from debugPixelsPerUnit(viewport): ");
         ViewportUtils.debugPixelsPerUnit(viewport);
