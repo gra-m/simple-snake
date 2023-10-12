@@ -147,7 +147,7 @@ public class GameController {
     public void spawnCoin() {
         if(!coin.isAvailableToEat()) {
             float coinX = MathUtils.random((int) (GameConfig.WORLD_WIDTH - GameConfig.COIN_SIZE));
-            float coinY = MathUtils.random((int) (GameConfig.Y_CONSTRAINED));
+            float coinY = MathUtils.random((int) (GameConfig.Y_CONSTRAINED - GameConfig.COIN_SIZE));
             coin.setAvailableToEat(true);
 
             coin.setPosition(coinX, coinY);

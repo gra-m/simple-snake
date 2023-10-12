@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
@@ -15,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.snake.assets.AssetDescriptors;
+import fun.madeby.snake.assets.AssetPaths;
+import fun.madeby.snake.assets.RegionNames;
 import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.entity.BodyPart;
@@ -24,6 +28,7 @@ import fun.madeby.snake.entity.SnakeHead;
 import fun.madeby.snake.util.GdxUtils;
 import fun.madeby.snake.util.ViewportUtils;
 import fun.madeby.snake.util.debug.DebugCameraController;
+import jdk.javadoc.internal.doclets.formats.html.markup.Head;
 
 // super dispose in game disposes game screen and this dispose
 
@@ -35,12 +40,19 @@ public class GameRenderer implements Disposable {
     private final GameController controller;
     private final AssetManager assetManager;
 
-    // Rendering for  GAME
-    private OrthographicCamera camera;
+    // Camera and Viewport for Debug (renderer.Line) and Game (batch.Texture) rendering
+    private OrthographicCamera gameCamera;
     private Viewport viewport;
-    // debug wireframe and bounds for collision
+
+    // debug wireframe and ShaperRenderer that renders them (follows entity bounds for collision)
     private ShapeRenderer renderer;
     private DebugCameraController debugCameraController;
+
+    // game Textures and the batch that renders them
+    private TextureRegion backgroundRegion;
+    private TextureRegion headRegion;
+    private TextureRegion bodyRegion;
+    private TextureRegion coinRegion;
     private final SpriteBatch batch;
 
     // Rendering for HUD
@@ -58,11 +70,17 @@ public class GameRenderer implements Disposable {
     }
 
     private void init() {
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
+        gameCamera = new OrthographicCamera();
+        viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, gameCamera);
         hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         renderer = new ShapeRenderer();
+
         font = assetManager.get(AssetDescriptors.UI_FONT);
+        TextureAtlas gameplayAtlas = assetManager.get(AssetDescriptors.GAMEPLAY_ATLAS);
+        backgroundRegion = gameplayAtlas.findRegion(RegionNames.BACKGROUND);
+        headRegion = gameplayAtlas.findRegion(RegionNames.HEAD);
+        bodyRegion = gameplayAtlas.findRegion(RegionNames.BODY);
+        coinRegion = gameplayAtlas.findRegion(RegionNames.COIN);
 
         debugCameraController = new DebugCameraController();
         debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
@@ -70,12 +88,47 @@ public class GameRenderer implements Disposable {
 
     public void render(float delta) {
         debugCameraController.handleDebugInput(delta);
-        debugCameraController.applyTo(camera);
+        debugCameraController.applyTo(gameCamera);
 
         GdxUtils.clearScreen();
 
+        renderGameplay();
         renderHUD();
         renderDebug();
+    }
+
+    private void renderGameplay() {
+        viewport.apply();
+
+        batch.setProjectionMatrix(gameCamera.combined);
+
+        batch.begin();
+        drawGameplay();
+        batch.end();
+    }
+
+    private void drawGameplay() {
+        batch.draw(backgroundRegion, 0,0, GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
+
+        Coin coin = controller.getCoin();
+        if (coin.isAvailableToEat()) {
+            batch.draw(coinRegion, coin.getX(), coin.getY(),
+                    GameConfig.COIN_SIZE, GameConfig.COIN_SIZE);
+        }
+
+        Snake snake = controller.getSnake();
+
+        for (BodyPart part: snake.getBodyParts()) {
+            batch.draw(bodyRegion, part.getX(), part.getY(),
+                    GameConfig.SNAKE_SIZE, GameConfig.SNAKE_SIZE);
+        }
+
+        SnakeHead head  = snake.getHead();
+        batch.draw(headRegion, head.getX(), head.getY(),
+                GameConfig.SNAKE_SIZE, GameConfig.SNAKE_SIZE);
+
+
+
     }
 
     private void renderHUD() {
@@ -116,7 +169,7 @@ public class GameRenderer implements Disposable {
 
         Color oldColor = renderer.getColor().cpy();
 
-        renderer.setProjectionMatrix(camera.combined);
+        renderer.setProjectionMatrix(gameCamera.combined);
         renderer.begin(ShapeRenderer.ShapeType.Line);
 
         drawDebug();
