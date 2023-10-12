@@ -37,6 +37,7 @@ import jdk.javadoc.internal.doclets.formats.html.markup.Head;
  */
 public class GameRenderer implements Disposable {
     private static final Logger LOG = new Logger(GameRenderer.class.getName(), Logger.DEBUG);
+    private boolean chooseDebuggingHere = false;
     private final GameController controller;
     private final AssetManager assetManager;
 
@@ -94,7 +95,9 @@ public class GameRenderer implements Disposable {
 
         renderGameplay();
         renderHUD();
-        renderDebug();
+        if (chooseDebuggingHere) {
+            renderDebug();
+        }
     }
 
     private void renderGameplay() {
