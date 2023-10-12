@@ -39,7 +39,9 @@ public class GameController {
                 snake.move();
 
                 checkOutOfBounds();
-                checkCollision(delta);
+                checkCollision();
+                GameManager.INSTANCE.update(delta);
+
             }
             spawnCoin();
         } else {
@@ -74,7 +76,7 @@ public class GameController {
      * Collision type1: head/coin if collision with coin (head eats coin) insert new bodypart and set
      * coin to notAvailableToEat.
      */
-    private void checkCollision(float delta) {
+    private void checkCollision() {
         // head/coin collision
         SnakeHead head = snake.getHead();
         Rectangle headBounds = head.getBoundsThatAreUsedForCollisionDetection();
@@ -83,7 +85,7 @@ public class GameController {
         if (Intersector.overlaps(headBounds, coinBounds) && coin.isAvailableToEat()) {
             snake.insertNewBodyPart();
             coin.setAvailableToEat(false);
-            GameManager.INSTANCE.incrementScore(GameConfig.VOTES_SHOULD_ONLY_BE_INTEGERS, delta);
+            GameManager.INSTANCE.incrementScore(GameConfig.VOTES_SHOULD_ONLY_BE_INTEGERS);
         }
 
         // head/body part collision

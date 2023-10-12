@@ -28,11 +28,14 @@ public class GameManager {
         return displayHighScore;
     }
 
-    public void incrementScore(int amount, float delta) {
+    public void incrementScore(int amount) {
         score += amount;
         if(score >= highScore) {
             highScore = score;
         }
+    }
+
+    public void update(float delta) {
         smoothDisplayScores(delta);
     }
 
