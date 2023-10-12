@@ -17,7 +17,7 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(SimpleSnakeGame simpleSnakeGame) {
         this.game = simpleSnakeGame;
         this.assetManager = game.getAssetManager();
-        GameManager.INSTANCE.setPlaying();
+
     }
 
 

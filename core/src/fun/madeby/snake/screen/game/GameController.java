@@ -26,6 +26,7 @@ public class GameController {
     public GameController() {
         this.snake = new Snake();
         this.coin = new Coin();
+        restart();
     }
 
     public void update(float delta) {
