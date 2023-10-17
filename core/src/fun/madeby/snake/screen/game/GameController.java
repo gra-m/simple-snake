@@ -2,6 +2,7 @@ package fun.madeby.snake.screen.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,14 +19,16 @@ import fun.madeby.snake.entity.SnakeHead;
 public class GameController {
 
     private static final Logger LOG = new Logger(GameController.class.getName(), Logger.DEBUG);
+    private final CollisionListener collisionListener;
 
     private Snake snake;
     private Coin coin;
     private float timer;
 
-    public GameController() {
+    public GameController(CollisionListener collisionListener) {
         this.snake = new Snake();
         this.coin = new Coin();
+        this.collisionListener = collisionListener;
         restart();
     }
 
@@ -86,6 +89,7 @@ public class GameController {
         if (Intersector.overlaps(headBounds, coinBounds) && coin.isAvailableToEat()) {
             snake.insertNewBodyPart();
             coin.setAvailableToEat(false);
+            collisionListener.hitCoin();
             GameManager.INSTANCE.incrementScore(GameConfig.VOTES_SHOULD_ONLY_BE_INTEGERS);
         }
 
@@ -98,6 +102,7 @@ public class GameController {
             Rectangle bodyPartBounds = bp.getBoundsThatAreUsedForCollisionDetection();
             if (Intersector.overlaps(headBounds, bodyPartBounds)) {
                 LOG.debug("Collision with bodypart! ITS Overrrrr!");
+                collisionListener.lose();
                 GameManager.INSTANCE.setGameOver();
             }
         }
@@ -151,6 +156,7 @@ public class GameController {
             coin.setAvailableToEat(true);
 
             coin.setPosition(coinX, coinY);
+
         }
 
     }
